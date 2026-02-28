@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/a", "destination": "/a.html" },
-    { "source": "/b", "destination": "/b.html" }
+    { "source": "/vsl-p1", "destination": "/vsl-p1.html" },
+    { "source": "/vsl-p2", "destination": "/vsl-p2.html" },
+    { "source": "/direta-p1", "destination": "/direta-p1.html" },
+    { "source": "/direta-p2", "destination": "/direta-p2.html" },
+    { "source": "/obrigado", "destination": "/obrigado.html" }
   ]
 }
