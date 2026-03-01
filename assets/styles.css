@@ -320,3 +320,90 @@ h2{
   font-family: ui-sans-serif, system-ui;
   color:var(--muted);
 }
+/* ===== HERO BANNER (estilo G4 adaptado ao Pais de Atleta) ===== */
+.hero--banner{
+  background:#000;
+  color:#fff;
+  padding:70px 0;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero__banner-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+@media (max-width:900px){
+  .hero__banner-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+}
+
+/* detalhe laranja */
+.hero--banner::before{
+  content:"";
+  position:absolute;
+  right:-120px;
+  top:-80px;
+  width:380px;
+  height:380px;
+  border:6px solid rgba(255,106,0,.75);
+  border-radius:50%;
+}
+
+.hero--banner::after{
+  content:"";
+  position:absolute;
+  right:-160px;
+  top:-40px;
+  width:520px;
+  height:520px;
+  border:6px solid rgba(255,106,0,.35);
+  border-radius:50%;
+}
+
+.hero__text .kicker{
+  color: rgba(255,106,0,.9);
+}
+
+.hero__text h1{
+  font-family: ui-sans-serif, system-ui;
+  font-size:56px;
+  line-height:1.02;
+  letter-spacing:.5px;
+  margin:10px 0 18px;
+}
+
+.hero__text h1 em{
+  font-style: italic;
+  color: #ff6a00;
+}
+
+.hero__text .subhead{
+  color: rgba(255,255,255,.78);
+  font-family: ui-sans-serif, system-ui;
+  margin-bottom:22px;
+  max-width:42ch;
+}
+
+.hero__image{
+  display:flex;
+  justify-content:flex-end;
+}
+
+@media (max-width:900px){
+  .hero__image{justify-content:center;}
+  .hero__text .subhead{max-width:none;}
+}
+
+.hero__image img{
+  width:100%;
+  max-width:560px;
+  height:auto;
+  border-radius:18px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+}
