@@ -256,3 +256,35 @@ h2{font-size:28px; margin:0 0 10px}
 .cards--4{
   grid-template-columns: repeat(4, 1fr);
 }
+
+/* ===== SPECS (FORMATO) - transformar em cards ===== */
+.specs{
+  display:grid;
+  gap:14px;
+  grid-template-columns: repeat(5, 1fr);
+}
+@media (max-width:1100px){
+  .specs{grid-template-columns: repeat(3, 1fr);}
+}
+@media (max-width:700px){
+  .specs{grid-template-columns: 1fr;}
+}
+
+.spec{
+  border:1px solid var(--line);
+  background: rgba(16,24,36,.6);
+  border-radius:18px;
+  padding:16px;
+}
+
+.spec__label{
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:.06em;
+  margin-bottom:6px;
+}
+
+.spec__value{
+  font-weight:800;
+  font-size:16px;
+}
