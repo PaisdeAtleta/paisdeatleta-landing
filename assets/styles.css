@@ -1036,24 +1036,6 @@ p{margin-bottom:0}
   }
 }
 
-/* ===== GUARANTEE ===== */
-.guarantee{
-  text-align:center;
-  max-width:600px;
-  margin:0 auto;
-}
-
-.guarantee__badge{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  border:3px solid var(--accent);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 20px;
-  font-size:32px;
-}
 
 /* ===== TESTIMONIALS ===== */
 .testimonial{
