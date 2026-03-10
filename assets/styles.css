@@ -921,31 +921,6 @@ p{margin-bottom:0}
   .section{padding:48px 0}
 }
 
-/* ===== MOBILE REFINEMENTS ===== */
-@media (max-width:520px){
-
-  .container{
-    padding:0 16px;
-  }
-
-  .topbar{
-    height:72px;
-  }
-
-  .brand img{
-    height:54px;
-  }
-
-  .hero__text h1{
-    font-size:32px;
-  }
-
-  .btn{
-    width:100%;
-  }
-
-}
-
 /* ===== SECTION HEADER (centered) ===== */
 .section-header{
   text-align:center;
