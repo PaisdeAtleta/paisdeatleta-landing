@@ -717,14 +717,34 @@ p{margin-bottom:0}
 
 .value-item{
   display:grid;
-  grid-template-columns:48px 1fr auto;
+  grid-template-columns:1fr auto;
   gap:16px;
   align-items:center;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
   border-radius:var(--radius);
   padding:20px 24px;
+  padding-left:44px;
+  position:relative;
   transition:border-color .2s;
+}
+
+.value-item::before{
+  content:"✓";
+  position:absolute;
+  left:16px;
+  top:22px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:var(--accent-glow);
+  color:var(--accent);
+  font-weight:900;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: ui-sans-serif, system-ui;
 }
 
 .value-item:hover{
