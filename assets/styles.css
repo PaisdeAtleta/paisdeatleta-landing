@@ -169,6 +169,19 @@ p{margin-bottom:0}
   font-weight:700;
 }
 
+.kicker-white{
+  color:#fff;
+}
+
+.kicker-orange{
+  color:var(--accent);
+}
+
+.kicker-sep{
+  color:rgba(255,255,255,.4);
+  margin:0 6px;
+}
+
 /* ===== SUBHEAD ===== */
 .subhead{
   font-family: ui-sans-serif, system-ui;
