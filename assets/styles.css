@@ -1313,3 +1313,6 @@ p{margin-bottom:0}
 .section-header .lead{
   margin:0 auto;
 }
+.section-header h2{
+  font-size:clamp(24px,3vw,32px);
+}
