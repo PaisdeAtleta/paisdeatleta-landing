@@ -1124,8 +1124,8 @@ p{margin-bottom:0}
 }
 
 .final-cta h2{
-  color:#fff;
-  margin-bottom:12px;
+  font-size:clamp(24px,3vw,32px);
+  font-weight:800;
 }
 
 .final-cta .lead{
