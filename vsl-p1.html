@@ -768,17 +768,33 @@ Levantador do Vôlei </p>
 
 <!-- CTA tracking -->
 <script>
-  document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el){
-    el.addEventListener('click', function(){
-      fbq('track', 'InitiateCheckout');
+document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el){
+  el.addEventListener('click', function(e){
+    e.preventDefault();
 
-      window.__track('cta_click', {
-        page: document.body.dataset.lp,
-        price_test: document.body.dataset.priceTest,
-        cta_text: el.textContent.trim()
-      });
+    var url = el.href;
+
+    window.__track('cta_click', {
+      page: document.body.dataset.lp,
+      price_test: document.body.dataset.priceTest,
+      cta_text: el.textContent.trim()
     });
+
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'InitiateCheckout', {}, {
+        event_callback: function() {
+          window.location.href = url;
+        }
+      });
+
+      setTimeout(function() {
+        window.location.href = url;
+      }, 800);
+    } else {
+      window.location.href = url;
+    }
   });
+});
 </script>
 
   <script>
