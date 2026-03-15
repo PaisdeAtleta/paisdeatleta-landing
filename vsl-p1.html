@@ -781,5 +781,65 @@ Levantador do Vôlei </p>
   });
 </script>
 
+  <script>
+
+// tempo na página (30s)
+setTimeout(function(){
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom','TimeOnPage30');
+  }
+}, 30000);
+
+
+// scroll tracking
+let scroll50Sent = false;
+let scroll90Sent = false;
+
+window.addEventListener('scroll', function() {
+
+  let scrollTop = window.scrollY;
+  let docHeight = document.body.scrollHeight - window.innerHeight;
+  let scrollPercent = (scrollTop / docHeight) * 100;
+
+  if (scrollPercent > 50 && !scroll50Sent) {
+    if (typeof fbq !== 'undefined') {
+      fbq('trackCustom','Scroll50');
+    }
+    scroll50Sent = true;
+  }
+
+  if (scrollPercent > 90 && !scroll90Sent) {
+    if (typeof fbq !== 'undefined') {
+      fbq('trackCustom','Scroll90');
+    }
+    scroll90Sent = true;
+  }
+
+});
+
+
+// visualização da oferta
+let offerViewed = false;
+
+window.addEventListener('scroll', function() {
+
+  let offer = document.querySelector('#oferta');
+
+  if (!offer || offerViewed) return;
+
+  let rect = offer.getBoundingClientRect();
+
+  if (rect.top < window.innerHeight && rect.bottom >= 0) {
+
+    if (typeof fbq !== 'undefined') {
+      fbq('trackCustom','OfferView');
+    }
+
+    offerViewed = true;
+  }
+
+});
+
+</script>
 </body>
 </html>
