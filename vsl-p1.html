@@ -30,6 +30,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2003313150397732');
 fbq('track', 'PageView');
+fbq('track', 'ViewContent');
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=2003313150397732&ev=PageView&noscript=1"
@@ -304,7 +305,7 @@ src="https://www.facebook.com/tr?id=2003313150397732&ev=PageView&noscript=1"
 </div>
 
     <div class="cta-row">
-      <a class="btn btn--primary" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-cta="true">Quero aprender a apoiar com método</a>
+      <a class="btn btn--primary" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-buy-cta="true">Quero aprender a apoiar com método</a>
     </div>
   </div>
 </section>
@@ -371,7 +372,7 @@ src="https://www.facebook.com/tr?id=2003313150397732&ev=PageView&noscript=1"
     </div>
 
     <div class="cta-row">
-      <a class="btn btn--primary" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-cta="true">Quero fazer parte</a>
+      <a class="btn btn--primary" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-buy-cta="true">Quero fazer parte</a>
       <p class="micro">Cada módulo inclui aulas gravadas + vídeos de perguntas e respostas com situações reais.</p>
     </div>
   </div>
@@ -665,7 +666,7 @@ Levantador do Vôlei </p>
 
         <p class="price__installment">ou 12x de R$ 58,10 no cartão</p>
 
-        <a class="btn btn--primary btn--block btn--large" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-cta="true"
+        <a class="btn btn--primary btn--block btn--large" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-buy-cta="true"
            style="margin-top:20px;font-size:20px;padding:20px 36px">
           Quero fazer parte da Academia de Pais
         </a>
@@ -743,7 +744,7 @@ Levantador do Vôlei </p>
   <div class="container">
     <h2>  Seu filho tem um sonho. Você tem o poder de impulsioná-lo.</h2>
 
-    <a class="btn btn--primary btn--large" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-cta="true" style="font-size:20px;padding:20px 40px">
+    <a class="btn btn--primary btn--large" href="https://paisdeatleta.app.cativa.digital/checkout/academia-de-pais" data-buy-cta="true" style="font-size:20px;padding:20px 40px">
       Quero fazer parte da Academia de Pais
     </a>
 
@@ -767,12 +768,10 @@ Levantador do Vôlei </p>
 
 <!-- CTA tracking -->
 <script>
-  document.querySelectorAll('[data-cta]').forEach(function(el){
+  document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el){
     el.addEventListener('click', function(){
-
-        // Evento para o Meta Pixel
       fbq('track', 'InitiateCheckout');
-      
+
       window.__track('cta_click', {
         page: document.body.dataset.lp,
         price_test: document.body.dataset.priceTest,
