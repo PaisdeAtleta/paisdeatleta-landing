@@ -1,40 +1,34 @@
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
 
-  <title>Academia de Pais | Pais de Atleta</title>
+fbq('init', '2003313150397732');
+fbq('track', 'PageView');
 
-  <!-- DataLayer base -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    window.__track = function (eventName, params) {
-      window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
-    };
-  </script>
+/* definição dinâmica do preço */
 
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
+var price = 697;
 
-  fbq('init', '2003313150397732');
-  fbq('track', 'PageView');
+var params = new URLSearchParams(window.location.search);
+var variant = params.get("vsl");
 
-  fbq('track', 'Purchase', {
-    value: 697,
-    currency: 'BRL'
-  });
-  </script>
+if (variant === "p1") {
+  price = 497;
+}
 
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=2003313150397732&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Meta Pixel Code -->
-</head>
+if (variant === "p2") {
+  price = 697;
+}
+
+fbq('track', 'Purchase', {
+  value: price,
+  currency: 'BRL'
+});
+</script>
