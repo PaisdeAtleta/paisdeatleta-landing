@@ -162,14 +162,15 @@ src="https://www.facebook.com/tr?id=2003313150397732&ev=PageView&noscript=1"/>
 
     <div style="max-width:720px;margin:0 auto">
       <div class="video-wrapper">
-        <iframe
-          src="https://www.youtube.com/embed/D6Pa4eX2A8Q?rel=0&modestbranding=1"
-          title="Academia de Pais"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
+<iframe
+  id="vsl-player"
+  src="https://www.youtube.com/embed/D6Pa4eX2A8Q?enablejsapi=1&rel=0&modestbranding=1"
+  title="Academia de Pais"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen>
+</iframe>
       </div>
     </div>
 
@@ -777,24 +778,58 @@ Levantador do Vôlei </p>
 <script src="/assets/script.js"></script>
 
 <!-- CTA tracking -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
-document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el){
-  el.addEventListener('click', function(e){
+/* =========================
+   HELPERS
+========================= */
+function trackMeta(eventName, params) {
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', eventName, params || {});
+  }
+}
+
+function trackMetaStandard(eventName, params, callback) {
+  if (typeof fbq !== 'undefined') {
+    if (callback) {
+      fbq('track', eventName, params || {}, {
+        event_callback: callback
+      });
+    } else {
+      fbq('track', eventName, params || {});
+    }
+  }
+}
+
+function trackDataLayer(eventName, params) {
+  if (typeof window.__track === 'function') {
+    window.__track(eventName, params || {});
+  }
+}
+
+/* =========================
+   CHECKOUT CTA
+========================= */
+document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el) {
+  el.addEventListener('click', function(e) {
     e.preventDefault();
 
     var url = el.href;
+    var ctaText = (el.textContent || '').trim();
 
-    window.__track('cta_click', {
+    trackDataLayer('cta_click', {
       page: document.body.dataset.lp,
       price_test: document.body.dataset.priceTest,
-      cta_text: el.textContent.trim()
+      cta_text: ctaText
     });
 
     if (typeof fbq !== 'undefined') {
-      fbq('track', 'InitiateCheckout', {}, {
-        event_callback: function() {
-          window.location.href = url;
-        }
+      trackMetaStandard('InitiateCheckout', {
+        content_name: 'Academia de Pais',
+        content_category: 'VSL'
+      }, function() {
+        window.location.href = url;
       });
 
       setTimeout(function() {
@@ -805,67 +840,134 @@ document.querySelectorAll('[data-buy-cta="true"]').forEach(function(el){
     }
   });
 });
-</script>
 
-  <script>
-
-// tempo na página (30s)
-setTimeout(function(){
-  if (typeof fbq !== 'undefined') {
-    fbq('trackCustom','TimeOnPage30');
-  }
+/* =========================
+   TIME ON PAGE
+========================= */
+setTimeout(function() {
+  trackMeta('TimeOnPage30');
 }, 30000);
 
+setTimeout(function() {
+  trackMeta('TimeOnPage60');
+}, 60000);
 
-// scroll tracking
-let scroll50Sent = false;
-let scroll90Sent = false;
+/* =========================
+   SCROLL TRACKING
+========================= */
+var scroll50Sent = false;
+var scroll90Sent = false;
 
 window.addEventListener('scroll', function() {
-
-  let scrollTop = window.scrollY;
-  let docHeight = document.body.scrollHeight - window.innerHeight;
-  let scrollPercent = (scrollTop / docHeight) * 100;
+  var scrollTop = window.scrollY;
+  var docHeight = document.body.scrollHeight - window.innerHeight;
+  var scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
   if (scrollPercent > 50 && !scroll50Sent) {
-    if (typeof fbq !== 'undefined') {
-      fbq('trackCustom','Scroll50');
-    }
+    trackMeta('Scroll50');
     scroll50Sent = true;
   }
 
   if (scrollPercent > 90 && !scroll90Sent) {
-    if (typeof fbq !== 'undefined') {
-      fbq('trackCustom','Scroll90');
-    }
+    trackMeta('Scroll90');
     scroll90Sent = true;
   }
-
 });
 
-
-// visualização da oferta
-let offerViewed = false;
-
+/* =========================
+   OFFER VIEW
+========================= */
+var offerViewed = false;
 window.addEventListener('scroll', function() {
-
-  let offer = document.querySelector('#oferta');
-
+  var offer = document.querySelector('#oferta');
   if (!offer || offerViewed) return;
 
-  let rect = offer.getBoundingClientRect();
-
+  var rect = offer.getBoundingClientRect();
   if (rect.top < window.innerHeight && rect.bottom >= 0) {
-
-    if (typeof fbq !== 'undefined') {
-      fbq('trackCustom','OfferView');
-    }
-
+    trackMeta('OfferView');
     offerViewed = true;
   }
-
 });
 
+/* =========================
+   YOUTUBE VSL TRACKING
+========================= */
+var player;
+var vslStarted = false;
+var vsl25 = false;
+var vsl50 = false;
+var vsl75 = false;
+var vsl90 = false;
+var vslInterval = null;
+
+function onYouTubeIframeAPIReady() {
+  var iframe = document.getElementById('vsl-player');
+  if (!iframe) return;
+
+  player = new YT.Player('vsl-player', {
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerStateChange(event) {
+  if (!player || typeof player.getDuration !== 'function') return;
+
+  if (event.data === YT.PlayerState.PLAYING) {
+    if (!vslStarted) {
+      trackMeta('VSLStart');
+      vslStarted = true;
+    }
+
+    if (!vslInterval) {
+      vslInterval = setInterval(checkVSLProgress, 1000);
+    }
+  }
+
+  if (
+    event.data === YT.PlayerState.PAUSED ||
+    event.data === YT.PlayerState.ENDED
+  ) {
+    if (vslInterval) {
+      clearInterval(vslInterval);
+      vslInterval = null;
+    }
+  }
+}
+
+function checkVSLProgress() {
+  if (!player || typeof player.getCurrentTime !== 'function' || typeof player.getDuration !== 'function') {
+    return;
+  }
+
+  var duration = player.getDuration();
+  var current = player.getCurrentTime();
+
+  if (!duration || duration <= 0) return;
+
+  var progress = (current / duration) * 100;
+
+  if (progress >= 25 && !vsl25) {
+    trackMeta('VSL25');
+    vsl25 = true;
+  }
+
+  if (progress >= 50 && !vsl50) {
+    trackMeta('VSL50');
+    vsl50 = true;
+  }
+
+  if (progress >= 75 && !vsl75) {
+    trackMeta('VSL75');
+    vsl75 = true;
+  }
+
+  if (progress >= 90 && !vsl90) {
+    trackMeta('VSL90');
+    vsl90 = true;
+  }
+}
 </script>
 </body>
 </html>
